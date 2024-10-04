@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import SimpleBottomNavigation from "../components/NavBar"; // Import the Bottom Navigation
 
 export const metadata: Metadata = {
   title: "SnapZoska",
-  description: "Greated by student Adam Tomcik",
+  description: "Created by student Adam Tomcik",
 };
 
 export default function RootLayout({
@@ -13,8 +14,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sk">
-      <body >
+      <body>
         {children}
+        <SimpleBottomNavigation /> {/* Add Bottom Navigation here */}
       </body>
     </html>
   );
