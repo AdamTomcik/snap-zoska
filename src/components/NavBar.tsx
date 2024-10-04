@@ -40,7 +40,7 @@ export default function SimpleBottomNavigation() {
         
         {/* Add Profile Action */}
         <BottomNavigationAction 
-          label="Pridať profil" 
+          label="Pridať príspevok" 
           icon={<AddCircleIcon />} 
           onClick={() => router.push('/pridat')}  // Navigate to add profile
         />
@@ -49,7 +49,7 @@ export default function SimpleBottomNavigation() {
         <BottomNavigationAction 
           label="Prihlásenie" 
           icon={<ExitToAppIcon />} 
-          onClick={() => router.push('/auth/odhlasenie')}  // Navigate to logout
+          onClick={() => router.push('/auth/prihlasenie')}  // Navigate to logout
         />
         
         {/* Registration Action */}
