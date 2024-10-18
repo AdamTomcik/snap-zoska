@@ -1,11 +1,28 @@
-// src/app/auth/registracia/page.tsx
+"use client";
 
-import Typography from '@mui/material/Typography';
+import { signIn } from 'next-auth/react';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 
-export const metadata = {title:"Registracia | ZoskaSnap "};
-
-export default function SignUp() {
+export default function Registracia() {
   return (
-    <Typography>Registracia</Typography>
+    <Box 
+      sx={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh', 
+        flexDirection: 'column'
+      }}
+    >
+      <h1>Registrácia</h1>
+      <Button 
+        variant="contained" 
+        color="primary" 
+        onClick={() => signIn('google')}  // Sign up via Google
+      >
+        Registrácia cez Google
+      </Button>
+    </Box>
   );
 }

@@ -1,63 +1,88 @@
 "use client";
 
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import HomeIcon from '@mui/icons-material/Home';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import AppRegistrationIcon from '@mui/icons-material/AppRegistration';
-import { useRouter } from 'next/navigation';  // For Next.js routing
+import { useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { BottomNavigation, BottomNavigationAction, Box } from '@mui/material';
+import { Home, AddCircle, AccountCircle, ExitToApp, Login, AppRegistration } from '@mui/icons-material';
+import { useState } from 'react';
 
-export default function SimpleBottomNavigation() {
-  const [value, setValue] = React.useState(0);
-  const router = useRouter();
+export default function NavBar() {
+  const { data: session } = useSession();
+  const [value, setValue] = useState(0);
 
   return (
-    <Box sx={{ width: '100%', position: 'fixed', bottom: 0 }}>
+    <Box 
+      sx={{
+        width: '100%',
+        position: 'fixed',
+        bottom: 0,
+        left: 0,
+        right: 0,
+      }}
+    >
       <BottomNavigation
-        showLabels
         value={value}
         onChange={(event, newValue) => {
-          setValue(newValue);  // This will handle the selection and the blue color automatically
+          setValue(newValue);
         }}
+        showLabels={true}  // Ensure all icons show labels
       >
-        {/* Home Action */}
         <BottomNavigationAction 
-          label="Domov" 
-          icon={<HomeIcon />} 
-          onClick={() => router.push('/')}  // Navigate to home
+          label="Domov"
+          icon={<Home />}
+          component={Link}
+          href="/"
+          style={{ color: value === 0 ? 'blue' : 'default' }} 
         />
-        
-        {/* Profile Action */}
-        <BottomNavigationAction 
-          label="Profil" 
-          icon={<AccountCircleIcon />} 
-          onClick={() => router.push('/profil')}  // Navigate to profile
-        />
-        
-        {/* Add Profile Action */}
-        <BottomNavigationAction 
-          label="Pridať príspevok" 
-          icon={<AddCircleIcon />} 
-          onClick={() => router.push('/pridat')}  // Navigate to add profile
-        />
-        
-        {/* Logout Action */}
-        <BottomNavigationAction 
-          label="Prihlásenie" 
-          icon={<ExitToAppIcon />} 
-          onClick={() => router.push('/auth/prihlasenie')}  // Navigate to logout
-        />
-        
-        {/* Registration Action */}
-        <BottomNavigationAction 
-          label="Registrácia" 
-          icon={<AppRegistrationIcon />} 
-          onClick={() => router.push('/auth/registracia')}  // Navigate to registration
-        />
+        {session ? (
+          <>
+            <BottomNavigationAction 
+              label="Profil"
+              icon={<AccountCircle />}
+              component={Link}
+              href="/profil"
+              style={{ color: value === 1 ? 'blue' : 'default' }}
+            />
+            <BottomNavigationAction 
+              label="Pridať príspevok"
+              icon={<AddCircle />}
+              component={Link}
+              href="/pridat"
+              style={{ color: value === 2 ? 'blue' : 'default' }}
+            />
+            <BottomNavigationAction 
+              label="Odhlásenie"
+              icon={<ExitToApp />}
+              component={Link}
+              href="/auth/odhlasenie"
+              style={{ color: value === 3 ? 'blue' : 'default' }}
+            />
+          </>
+        ) : (
+          <>
+            <BottomNavigationAction 
+              label="Príspevky"
+              icon={<AddCircle />}
+              component={Link}
+              href="/prispevok"
+              style={{ color: value === 1 ? 'blue' : 'default' }}
+            />
+            <BottomNavigationAction 
+              label="Registrácia"  // Label for "Registrácia" button
+              icon={<AppRegistration />} 
+              component={Link}
+              href="/auth/registracia"  // Link to the registration page
+              style={{ color: value === 2 ? 'blue' : 'default' }}
+            />
+            <BottomNavigationAction 
+              label="Prihlásenie"
+              icon={<Login />}
+              component={Link}
+              href="/auth/prihlasenie"
+              style={{ color: value === 3 ? 'blue' : 'default' }}
+            />
+          </>
+        )}
       </BottomNavigation>
     </Box>
   );

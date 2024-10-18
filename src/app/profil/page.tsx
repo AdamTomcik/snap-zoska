@@ -1,11 +1,25 @@
-// src/app/profil/page.tsx
+"use client";
 
-import Typography from '@mui/material/Typography';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
-export const metadata = {title:"Zoznam profilov | ZoskaSnap "};
+export default function ProfilePage() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
-export default function ProfileList() {
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (!session) {
+    router.push('/auth/prihlasenie');
+    return null;
+  }
+
   return (
-    <Typography>Zoznam profilov</Typography>
+    <div>
+      <h1>Profil</h1>
+      <p>Si prihlásený ako {session.user?.name}</p>
+    </div>
   );
 }

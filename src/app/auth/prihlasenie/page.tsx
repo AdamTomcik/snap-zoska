@@ -1,11 +1,14 @@
-// src/app/auth/prihlasenie/page.tsx
+"use client";
 
-import Typography from '@mui/material/Typography';
+import { signIn } from 'next-auth/react';
 
-export const metadata = {title:"Prihlasenie | ZoskaSnap "};
-
-export default function SignIn() {
+export default function Prihlasenie() {
   return (
-    <Typography>Prilasenie</Typography>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div>
+        <h1>Prihlásenie</h1>
+        <button onClick={() => signIn('google')}>Prihlásiť sa cez Google</button>
+      </div>
+    </div>
   );
 }
