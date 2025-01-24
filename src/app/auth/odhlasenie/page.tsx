@@ -3,11 +3,11 @@
 "use client";
 
 import { signOut } from "next-auth/react";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Odhlasenie() {
-  const router = useRouter();
+  //const router = useRouter();
 
   // Funkcia na odhlásenie
   const handleLogout = async () => {

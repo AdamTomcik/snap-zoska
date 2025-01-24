@@ -56,7 +56,7 @@ export default function Registracia() {
             color: theme.palette.text.primary,  // Use theme text color
           }}
         >
-          SÚHLASÍTE S PODMIENKAMI GDPR?{' '}
+          SÚHLASÍTE S PODMIENKAMI GDPR?AK ÁNO KLIKNITE NA ŠTVOREC{' '}
           
           {/* Small checkbox block */}
           <Box
