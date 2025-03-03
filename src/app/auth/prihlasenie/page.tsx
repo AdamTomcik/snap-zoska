@@ -16,7 +16,7 @@ export default function Prihlasenie() {
     const result = await signIn('google');  // Trigger Google sign-in using NextAuth
 
     if (result?.ok) {
-      router.push('/prispevok');  // Redirect to the "prispevok" page after successful login
+      router.push('/prispevky');  // Redirect to the "prispevky" page after successful login
     } else {
       alert('Chyba pri prihlásení');  // Display error message if login fails
     }

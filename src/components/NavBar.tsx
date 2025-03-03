@@ -52,7 +52,7 @@ export default function NavBar({ toggleDarkMode }: NavBarProps) {
       label="Hľadanie"
       icon={<Search />}
       component={Link}
-      href="/search"
+      href="/hladanie"
     />,
     <BottomNavigationAction
       key="profile"

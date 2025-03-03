@@ -8,6 +8,15 @@ import { prisma } from "@/app/api/auth/[...nextauth]/prisma";
 // Fetch profiles based on search term
 export const fetchProfiles = async (searchTerm: string) => {
   try {
+    // If search term is empty, return all profiles
+    if (!searchTerm.trim()) {
+      const profiles = await prisma.profile.findMany({
+        include: { user: true },
+      });
+      return profiles;
+    }
+
+    // Otherwise, search by name or interests
     const profiles = await prisma.profile.findMany({
       where: {
         OR: [
@@ -15,7 +24,7 @@ export const fetchProfiles = async (searchTerm: string) => {
           { interests: { has: searchTerm } },
         ],
       },
-      include: { user: true }, // Include user data
+      include: { user: true },
     });
 
     return profiles;

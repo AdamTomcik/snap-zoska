@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     if (session) {
-      router.push('/prispevok');
+      router.push('/prispevky');
     }
   }, [session, router]);
   if (!session) {

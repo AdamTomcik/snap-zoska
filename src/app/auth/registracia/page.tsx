@@ -16,7 +16,7 @@ export default function Registracia() {
   const handleRegister = async () => {
     // Simulate the registration process (you can add actual registration logic here)
     alert('Successful registration!');  // Replace with actual registration logic
-    router.push('/prispevok');  // Redirect to the "prispevok" page after successful registration
+    router.push('/prispevky');  // Redirect to the "prispevky" page after successful registration
   };
 
   const handleCheckboxClick = () => {
