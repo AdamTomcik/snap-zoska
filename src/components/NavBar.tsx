@@ -2,10 +2,11 @@
 'use client';
 
 import { useState } from 'react';
-import { BottomNavigation, BottomNavigationAction, Box, IconButton } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, Box, IconButton, Menu, MenuItem } from '@mui/material';
 import { Home, AccountCircle, ExitToApp, Login, PersonAdd, Search, Shield, Info, PostAdd, Brightness4 } from '@mui/icons-material';
 import Link from 'next/link';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 interface NavBarProps {
   toggleDarkMode: () => void;
@@ -13,7 +14,27 @@ interface NavBarProps {
 
 export default function NavBar({ toggleDarkMode }: NavBarProps) {
   const { data: session } = useSession();
+  const router = useRouter();
   const [value, setValue] = useState(0);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+  const handleProfileClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleProfileNavigate = () => {
+    router.push('/profil');
+    handleClose();
+  };
+
+  const handleLogout = async () => {
+    await signOut({ callbackUrl: '/' });
+    handleClose();
+  };
 
   const loggedOutNavItems = [
     <BottomNavigationAction
@@ -58,8 +79,7 @@ export default function NavBar({ toggleDarkMode }: NavBarProps) {
       key="profile"
       label="Profil"
       icon={<AccountCircle />}
-      component={Link}
-      href="/profil"
+      onClick={handleProfileClick}
     />,
     <BottomNavigationAction
       key="add"
@@ -67,13 +87,6 @@ export default function NavBar({ toggleDarkMode }: NavBarProps) {
       icon={<PostAdd />}
       component={Link}
       href="/pridat"
-    />,
-    <BottomNavigationAction
-      key="logout"
-      label="Odhlásenie"
-      icon={<ExitToApp />}
-      component={Link}
-      href="/auth/odhlasenie"
     />,
   ];
 
@@ -91,11 +104,27 @@ export default function NavBar({ toggleDarkMode }: NavBarProps) {
           href="/"
         />
         {session ? loggedInNavItems : loggedOutNavItems}
-        {/* Ikona pro přepnutí dark mode */}
         <IconButton onClick={toggleDarkMode}>
           <Brightness4 />
         </IconButton>
       </BottomNavigation>
+
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'center',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'center',
+        }}
+      >
+        <MenuItem onClick={handleProfileNavigate}>Môj profil</MenuItem>
+        <MenuItem onClick={handleLogout}>Odhlásiť sa</MenuItem>
+      </Menu>
     </Box>
   );
 }

@@ -1,4 +1,3 @@
-
 // src\app\api\auth\[...nextauth]\authOptions.ts
 
 import { NextAuthOptions } from "next-auth";
@@ -16,13 +15,19 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
-  debug:true, // Enable/disable detailed logging
+  debug: true, // Enable/disable detailed logging
   pages: {
     signIn: '/auth/prihlasenie',
     signOut: '/auth/odhlasenie',
   },
   callbacks: {
-    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
+    session: async ({ session, user }) => {
+      if (session?.user) {
+        session.user.id = user.id;
+      }
+      return session;
+    },
+    redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
       // Redirect to home page after sign-in
       return baseUrl || url; // baseUrl is automatically set from NEXTAUTH_URL in .env
     },
